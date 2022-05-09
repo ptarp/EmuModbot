@@ -1,0 +1,82 @@
+06272011 -
+Changed -
+  "cast" command usage now allows for multiple aliases.  If you have several spells with the same alias, using /bc cast <alias> will now cast all spells marked.
+      Example, for shaman you can have Fo7, Talisman of Boar, Talisman of Wrulan, Talisman of Tribunal, ect..  all marked with "fullgroup".  "/mb cast fullgroup" will
+      cast each spell in the order they are found in the .ini file.
+      
+  Buffing -
+      Group buffs can now be seperated to different classes, and will allow keeping the spell on netbots members in seperate groups from the caster with the inclusion of keyword "raid".  Example -
+      
+ABGem2=8
+ABSpell2=Focus of the Seventh
+ABSpellFoci2=
+ABDurMod2=50
+ABSpellAlias2=fo7|grpfocus|fullgroup
+ABAnnounce2=
+ABSpellMinMana2=20
+ABTarCnt2=2
+ABTarType2=war shd pal rng mnk rog brd bst ber shm dru wiz mag enc nec raid
+ABRecast2=FALSE
+ABSpellIcon2=
+ABPreCondition2=TRUE
+
+      Note from the above example that clr is not included in the TarType..  My clerics have the spell blocked.  Attempting to cast on them will cause a chain loop of casting until
+      the cleric gets self buff on that doesn't "stack" with focus.  - so watch spell stacking and make sure to set your toons accordingly.
+      
+      Old format of "self" will also work with no change if you don't want to buff other groups with the spell.
+      
+  Commands -
+      Tell commands will now check buff aliases, and don't need "cast" to ask for buffs..  "/tell <shaman> fullgroup" from a non-master toon will make the shaman cast
+      every spell with that alias on the sender of the tell.  Masters still require use of "cast".  - This does allow guildies or whoever else knows your aliases to get buffs easily.
+      /say is not effected and is still not enabled for modbot.
+      
+      Added "docommand" -
+        Master toons that aren't in netbots can now directly command toons.  "/tell <toon> docommand /sit" will make the receiving toon sit, or execute any command after the "docommand"
+        keyword.  - Word of caution - You can cause macro errors with this if you aren't careful.  The command sent is executed directly with /docommand in the macro.
+        A tell received of "/tell <toon> docommand /sit" will locally execute "/docommand /sit"  Watch extra characters and or brackets..  - Because of the nature of this one, the commanding toon
+        MUST be listed in MasterList.
+      
+
+04072011 - 
+ADUseHot should be working.  
+	Remember that it is a timer of how long to exclude a mob from checking for each spell if mob doesn't have a raid or group member as target.
+
+
+Jan 2011
+Added command - "saytarget <text>"
+  - usage - Target the npc you wish all your toons to say something to (like the druid or other buffbots in the lobby)
+   and "/bca saytarget soe"  All your toons should /stick to the npc until within range and /say soe to him.
+
+/bcaa //mb saytarget soe and you only have to type it once if your EQBC supports /bcaa...
+
+misc fixes for outdoor spells including bards.  Macro will now detect if you are twisting an outdoors buff in rest state and turn it off.
+  - Combat state fix isn't in yet, but shouldn't take long when I get the chance to test next weekend.  That includes buffs marked "cbt"
+   in the ABTarClass variable.  Continue using "/bc cast <alias> off" for those until I get the chance.
+
+
+
+Sept 6, 2010.
+ - Changed from modheal.inc to modheal2.inc for this revision.  Changes include a change in logic for group heals to repair a bug that was created when healer's own class was affected.
+      the bug involved would mistakenly return an incorrect count of how many toons needed the heal, and heal wouldn't cast.
+ - Found an incorrectly located delay that created a pause in the macro when there shouldn't have been (only when healing)
+ The changed modheal2.inc should be compatible with live version, but needs testing.
+ 
+ - Added "reconnect [servername or ip]" group command.  "reconnect asus" or "reconnect 192.168.0.5" will make toons send a /bccmd quit and
+      /bccmd connect [name or ip] commands.  "reconnect" used without server will issue /bccmd reconnect command.
+      
+- Added "autobank" command.  Use with any item name in quotes or with categories you've made in your loot.ini files.
+  /mb autobank research will move any item marked "=research" in your loot.ini file from your toon to the bank via the "autobank" button..
+
+
+I have removed plugins from this site for now.  
+I've started using EQItchy's VIP release since he has a much more up-to date MQ source that he's made available on his site - 
+http://www.infernis.org/
+
+I'm currently still working on removing the use of some TLO's that are missing from the EQEmu version of EQ from modbot, and will get a version up soon that should run.
+Aug 2010 -
+Now changed to using SoD client with MQ2-20081223a release.  This is working more closely to live version.
+
+There's a few changes for looting and zoning.  on EQEmu, you don't spawn with gear when you die, so I had to revert a lot of changes for that.
+Also, changes for modheal that may be compatible with live..
+
+    
